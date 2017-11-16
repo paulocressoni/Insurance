@@ -42,13 +42,10 @@ ylabel('Error')
 [lambda_vec, error_train, error_val] = validationCurve(X, y, X_val, y_val);
 
 figure(2);
-plot(1:m, error_train, 1:m, error_test);
-
-title(sprintf('Polynomial Regression Learning Curve (lambda = %f)', lambda));
-xlabel('Number of training examples')
-ylabel('Error')
-%axis([0 13 0 100])
-legend('Train', 'Test')
+plot(lambda_vec, error_train, lambda_vec, error_val);
+legend('Train', 'Cross Validation');
+xlabel('lambda');
+ylabel('Error');
 
 % predict
 p = sigmoid(X * theta);
