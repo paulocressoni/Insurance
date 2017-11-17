@@ -5,14 +5,25 @@ clear ; close all; clc
 
 % csv train file
 %train_csv = "train_2.csv";
+
+%% smaller train dataset to develop code
 train_csv = "c.csv";
 
 % load variables from file (50% for train and validation)
-X = csvread(train_csv)(1:end*0.5, 3:end);
-X_val = csvread(train_csv)(end*0.5+1:end, 3:end);
-y = csvread(train_csv)(1:end*0.5, 1);
-y_val = csvread(train_csv)(end*0.5+1:end, 1);
-id = csvread(train_csv)(:, 2);
+File_io = csvread(train_csv);
+
+% Shuffle the rows
+%File_io = File_io(randperm(size(File_io,1)),:);
+
+X = File_io(1:end*0.5, 3:end);
+
+X_val = File_io(end*0.5+1:end, 3:end);
+
+y = File_io(1:end*0.5, 1);
+
+y_val = File_io(end*0.5+1:end, 1);
+
+id = File_io(:, 2);
 
 %  Setup the data matrix appropriately, and add ones for the intercept term
 [m, n] = size(X);
@@ -49,3 +60,6 @@ ylabel('Error');
 
 % predict
 p = sigmoid(X * theta);
+
+% save theta vector
+save('theta.mat', 'theta')
